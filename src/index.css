@@ -1,0 +1,322 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --bg: #f1f5f9;
+  --surface: #ffffff;
+  --border: #e2e8f0;
+  --text: #1e293b;
+  --text-muted: #94a3b8;
+  --danger: #ef4444;
+  --purchased-color: #94a3b8;
+  --radius: 12px;
+}
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  height: 100%;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ── App shell ─────────────────────────────────────────── */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--surface);
+}
+
+.app-header {
+  background: var(--primary);
+  color: #fff;
+  padding: 14px 16px;
+  padding-top: calc(14px + env(safe-area-inset-top));
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.app-header h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* ── List tabs ─────────────────────────────────────────── */
+
+.list-tabs-container {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  flex-shrink: 0;
+}
+
+.list-tabs-container::-webkit-scrollbar {
+  display: none;
+}
+
+.list-tabs {
+  display: flex;
+  align-items: stretch;
+  padding: 0 8px;
+  min-width: max-content;
+}
+
+.list-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  min-height: 48px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  user-select: none;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.list-tab.active {
+  border-bottom-color: var(--primary);
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+.tab-edit-input {
+  border: none;
+  border-bottom: 2px solid var(--primary);
+  outline: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  background: transparent;
+  width: 90px;
+  padding: 2px 0;
+}
+
+.tab-delete-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 2px 2px;
+  display: flex;
+  align-items: center;
+  min-width: 24px;
+  min-height: 24px;
+  justify-content: center;
+}
+
+.add-list-btn {
+  background: none;
+  border: 1px dashed var(--border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: auto 0 auto 8px;
+  white-space: nowrap;
+}
+
+/* ── Main content ──────────────────────────────────────── */
+
+.app-main {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 12px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ── Add item ──────────────────────────────────────────── */
+
+.add-item {
+  display: flex;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px 6px 6px 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.add-item input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background: transparent;
+  color: var(--text);
+  min-height: 40px;
+}
+
+.add-item input::placeholder {
+  color: var(--text-muted);
+}
+
+.add-item button {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  min-height: 44px;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.add-item button:active {
+  background: var(--primary-dark);
+}
+
+/* ── Item list ─────────────────────────────────────────── */
+
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 8px 10px 4px;
+  min-height: 56px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  touch-action: manipulation;
+}
+
+.item-row.purchased {
+  background: #f8fafc;
+}
+
+.drag-handle {
+  color: var(--text-muted);
+  cursor: grab;
+  padding: 4px 6px;
+  font-size: 1.1rem;
+  touch-action: none;
+  flex-shrink: 0;
+  line-height: 1;
+  user-select: none;
+}
+
+.item-row.purchased .drag-handle {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.item-row input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: var(--primary);
+}
+
+.item-name {
+  flex: 1;
+  font-size: 1rem;
+  line-height: 1.4;
+  cursor: text;
+  word-break: break-word;
+}
+
+.item-row.purchased .item-name {
+  text-decoration: line-through;
+  color: var(--purchased-color);
+}
+
+.item-edit-input {
+  flex: 1;
+  border: none;
+  border-bottom: 2px solid var(--primary);
+  outline: none;
+  font-size: 1rem;
+  background: transparent;
+  color: var(--text);
+  padding: 2px 0;
+  font-family: inherit;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  line-height: 1;
+  padding: 4px 8px;
+  min-width: 40px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.delete-btn:active {
+  color: var(--danger);
+}
+
+/* ── Section divider ───────────────────────────────────── */
+
+.section-divider {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 10px 0 4px;
+}
+
+/* ── Empty / loading states ────────────────────────────── */
+
+.empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 48px 20px;
+  font-size: 0.95rem;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100dvh;
+  color: var(--text-muted);
+  font-size: 1rem;
+  background: var(--bg);
+}
